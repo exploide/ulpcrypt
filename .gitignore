@@ -1,0 +1,7 @@
+# list files and folders here which should not be set under version control
+
+# build output
+build/
+
+# Qt Creator config
+CMakeLists.txt.user
