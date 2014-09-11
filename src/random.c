@@ -17,7 +17,7 @@
  */
 int get_random_numbers(uint64_t buffer[], size_t count, uint64_t b) {
 
-    #ifdef __linux__
+    #if defined(__linux__) || defined(__APPLE__)
 
         uint64_t bad = UINT64_MAX - (UINT64_MAX % b);
         FILE* f = fopen("/dev/urandom", "r");
