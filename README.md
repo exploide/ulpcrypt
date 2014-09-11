@@ -5,14 +5,14 @@ Implementation of the U-LP Cryptosystem
 
 This library is an implementation of the U-LP cryptosystem as described by Cabarcas, Göpfert, and Weiden in *Provably Secure LWE Encryption with Smallish Uniform Noise and Secret*. The library provides functions for key generation, encryption, and decryption, for the standard variant of U-LP, as well as for the Ring-LWE variant.
 
-U-LP is a provably secure (post-quantum) encryption scheme, based on the *Learning with Errors* problem.
+U-LP is a provably secure (post-quantum) encryption scheme, based on the *learning with errors* problem.
 
 Warning: Note that this cryptosystem is very young and not very extensively researched, yet. The purpose of this library is mainly for academic purposes. So take care when considering this for use in practice.
 
 
 ##Building ulpcrypt
 
-ulpcrypt is built using the CMake build system. Primarily it's configured for the use with the gcc compiler. ulpcrypt should compile on Linux and Windows. The following shows the steps required for compilation, exemplary on Linux:
+ulpcrypt is built using the CMake build system. Primarily it's configured for the use with the gcc compiler, but should also work with clang. ulpcrypt should compile on Linux, Windows, and Mac OS X. The following shows the steps required for compilation, exemplary on Linux:
 ```
 $ mkdir build
 $ cd build
