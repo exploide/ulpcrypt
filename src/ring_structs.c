@@ -4,7 +4,7 @@
 
 
 /**
- * Allocate heap memory for storing an U-LP public key (ring variant).
+ * Allocate heap memory for storing a U-LP public key (ring variant).
  * @param size_t n - security parameter and message length
  * @return ulp_ring_public_key* - pointer to the allocated heap memory
  */
@@ -26,7 +26,7 @@ ulp_ring_public_key* ulp_ring_alloc_public_key(size_t n) {
 
 
 /**
- * Allocate heap memory for storing an U-LP private key (ring variant).
+ * Allocate heap memory for storing a U-LP private key (ring variant).
  * @param size_t n - security parameter and message length
  * @return ulp_ring_private_key* - pointer to the allocated heap memory
  */
@@ -45,7 +45,7 @@ ulp_ring_private_key* ulp_ring_alloc_private_key(size_t n) {
 
 
 /**
- * Allocate heap memory for storing an U-LP ciphertext (ring variant).
+ * Allocate heap memory for storing a U-LP ciphertext (ring variant).
  * @param size_t n - security parameter and message length
  * @return ulp_ring_ciphertext* - pointer to the allocated heap memory
  */
@@ -67,7 +67,7 @@ ulp_ring_ciphertext* ulp_ring_alloc_ciphertext(size_t n) {
 
 
 /**
- * Deallocate heap memory for an U-LP public key (ring variant).
+ * Deallocate heap memory for a U-LP public key (ring variant).
  * @param ulp_ring_public_key* pub_key - pointer to the memory to free
  */
 void ulp_ring_free_public_key(ulp_ring_public_key* pub_key) {
@@ -80,7 +80,7 @@ void ulp_ring_free_public_key(ulp_ring_public_key* pub_key) {
 
 
 /**
- * Deallocate heap memory for an U-LP private key (ring variant).
+ * Deallocate heap memory for a U-LP private key (ring variant).
  * @param ulp_ring_private_key* priv_key - pointer to the memory to free
  */
 void ulp_ring_free_private_key(ulp_ring_private_key* priv_key) {
@@ -92,7 +92,7 @@ void ulp_ring_free_private_key(ulp_ring_private_key* priv_key) {
 
 
 /**
- * Deallocate heap memory for an U-LP ciphertext (ring variant).
+ * Deallocate heap memory for a U-LP ciphertext (ring variant).
  * @param ulp_ring_ciphertext* ciphertext - pointer to the memory to free
  */
 void ulp_ring_free_ciphertext(ulp_ring_ciphertext* ciphertext) {

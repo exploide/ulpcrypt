@@ -4,7 +4,7 @@
 
 
 /**
- * Allocate heap memory for storing an U-LP public key.
+ * Allocate heap memory for storing a U-LP public key.
  * @param size_t n - security parameter
  * @param size_t l - message length
  * @return ulp_public_key* - pointer to the allocated heap memory
@@ -28,7 +28,7 @@ ulp_public_key* ulp_alloc_public_key(size_t n, size_t l) {
 
 
 /**
- * Allocate heap memory for storing an U-LP private key.
+ * Allocate heap memory for storing a U-LP private key.
  * @param size_t n - security parameter
  * @param size_t l - message length
  * @return ulp_private_key* - pointer to the allocated heap memory
@@ -49,7 +49,7 @@ ulp_private_key* ulp_alloc_private_key(size_t n, size_t l) {
 
 
 /**
- * Allocate heap memory for storing an U-LP ciphertext.
+ * Allocate heap memory for storing a U-LP ciphertext.
  * @param size_t n - security parameter
  * @param size_t l - message length
  * @return ulp_ciphertext* - pointer to the allocated heap memory
@@ -73,7 +73,7 @@ ulp_ciphertext* ulp_alloc_ciphertext(size_t n, size_t l) {
 
 
 /**
- * Deallocate heap memory for an U-LP public key.
+ * Deallocate heap memory for a U-LP public key.
  * @param ulp_public_key* pub_key - pointer to the memory to free
  */
 void ulp_free_public_key(ulp_public_key* pub_key) {
@@ -86,7 +86,7 @@ void ulp_free_public_key(ulp_public_key* pub_key) {
 
 
 /**
- * Deallocate heap memory for an U-LP private key.
+ * Deallocate heap memory for a U-LP private key.
  * @param ulp_private_key* priv_key - pointer to the memory to free
  */
 void ulp_free_private_key(ulp_private_key* priv_key) {
@@ -98,7 +98,7 @@ void ulp_free_private_key(ulp_private_key* priv_key) {
 
 
 /**
- * Deallocate heap memory for an U-LP ciphertext.
+ * Deallocate heap memory for a U-LP ciphertext.
  * @param ulp_ciphertext* ciphertext - pointer to the memory to free
  */
 void ulp_free_ciphertext(ulp_ciphertext* ciphertext) {
