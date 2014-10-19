@@ -5,3 +5,9 @@ build/
 
 # Qt Creator config
 CMakeLists.txt.user
+
+# LaTeX output
+*.aux
+*.log
+*.out
+*.synctex.gz

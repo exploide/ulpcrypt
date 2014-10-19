@@ -1,0 +1,240 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\title{\Huge{ulpcrypt}\\\large{API Documentation}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{General Usage}
+
+ulpcrypt compiles to a shared and a static library. To make the function definitions available, just include the header \texttt{ulpcrypt.h}. Most functions return the value 0 on success and a negative value, otherwise. Exceptions are the functions for allocating structures, which return a pointer, and the functions for deallocating structures, which return nothing.
+
+\section*{Structures}
+
+\subsection*{\texttt{ulp\_public\_key}}
+Public key for U-LP.\\
+Structure members:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+\texttt{uint64\_t q} - modulus\\
+\texttt{uint64\_t se} - error bound for encryption\\
+\texttt{uint64\_t* A} - part of the public key\\
+\texttt{uint64\_t* P} - part of the public key
+
+\subsection*{\texttt{ulp\_private\_key}}
+Private key for U-LP.\\
+Structure members:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+\texttt{uint64\_t q} - modulus\\
+\texttt{uint64\_t*} S - secret
+
+\subsection*{\texttt{ulp\_ciphertext}}
+Ciphertext for U-LP.\\
+Structure members:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+\texttt{uint64\_t* c1} - first part of the ciphertext\\
+\texttt{uint64\_t* c2} - second part of the ciphertext
+
+\section*{Functions}
+
+\subsection*{\texttt{ulp\_alloc\_public\_key}}
+Allocate heap memory for storing a U-LP public key.\\
+Parameters:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+Return value:\\
+\texttt{ulp\_public\_key*} - pointer to the allocated heap memory
+
+\subsection*{\texttt{ulp\_alloc\_private\_key}}
+Allocate heap memory for storing a U-LP private key.\\
+Parameters:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+Return value:\\
+\texttt{ulp\_private\_key*} - pointer to the allocated heap memory
+
+\subsection*{\texttt{ulp\_alloc\_ciphertext}}
+Allocate heap memory for storing a U-LP ciphertext.\\
+Parameters:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+Return value:\\
+\texttt{ulp\_ciphertext*} - pointer to the allocated heap memory
+
+\subsection*{\texttt{ulp\_free\_public\_key}}
+Deallocate heap memory for a U-LP public key.\\
+Parameters:\\
+\texttt{ulp\_public\_key* pub\_key} - pointer to the memory to free\\
+Return value:\\
+\texttt{void}
+
+\subsection*{\texttt{ulp\_free\_private\_key}}
+Deallocate heap memory for a U-LP private key.\\
+Parameters:\\
+\texttt{ulp\_private\_key* priv\_key} - pointer to the memory to free\\
+Return value:\\
+\texttt{void}
+
+\subsection*{\texttt{ulp\_free\_ciphertext}}
+Deallocate heap memory for a U-LP ciphertext.\\
+Parameters:\\
+\texttt{ulp\_ciphertext* ciphertext} - pointer to the memory to free\\
+Return value:\\
+\texttt{void}
+
+\subsection*{\texttt{ulp\_generate\_parameters}}
+Generate the parameters for the U-LP cryptosystem dependent on n and l.\\
+Parameters:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+\texttt{uint64\_t* sk} - pointer to error bound for key generation (will be generated)\\
+\texttt{uint64\_t* se} - pointer to error bound for encryption (will be generated)\\
+\texttt{uint64\_t* q} - pointer to modulus (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\subsection*{\texttt{ulp\_generate\_key\_pair}}
+Generate a keypair for the U-LP cryptosystem.\\
+Parameters:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{size\_t l} - message length\\
+\texttt{uint64\_t sk} - error bound for key generation\\
+\texttt{uint64\_t se} - error bound for encryption\\
+\texttt{uint64\_t q} - modulus, must be less than $2^{63}$ due to possible overflow problems\\
+\texttt{ulp\_public\_key** pub\_key\_p} - pointer to a public key pointer (will be generated)\\
+\texttt{ulp\_private\_key** priv\_key\_p} - pointer to a private key pointer (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\subsection*{\texttt{ulp\_encrypt}}
+Encrypt a message with the U-LP cryptosystem.\\
+Parameters:\\
+\texttt{uint8\_t msg[]} - the bytes to encrypt (number of bits has to match the l parameter in the key)\\
+\texttt{ulp\_public\_key* pub\_key} - the public key used for encryption\\
+\texttt{ulp\_ciphertext** ciphertext\_p} - pointer to the ciphertext pointer (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\subsection*{\texttt{ulp\_decrypt}}
+Decrypt a ciphertext with the U-LP cryptosystem.\\
+Parameters:\\
+\texttt{ulp\_ciphertext* ciphertext} - pointer to the ciphertext to decrypt\\
+\texttt{ulp\_private\_key* priv\_key} - the private key used for decryption\\
+\texttt{uint8\_t** msg\_p} - pointer to the message buffer pointer (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\section*{Ring Structures}
+
+\subsection*{\texttt{ulp\_ring\_public\_key}}
+Public key for U-LP ring variant.\\
+Structure members:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{uint64\_t q} - modulus\\
+\texttt{uint64\_t se} - error bound for encryption\\
+\texttt{uint64\_t* a} - part of the public key\\
+\texttt{uint64\_t* p} - part of the public key
+
+\subsection*{\texttt{ulp\_ring\_private\_key}}
+Private key for U-LP ring variant.\\
+Structure members:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{uint64\_t q} - modulus\\
+\texttt{uint64\_t* s} - secret vector
+
+\subsection*{\texttt{ulp\_ring\_ciphertext}}
+Ciphertext for U-LP ring variant.\\
+Structure members:\\
+\texttt{size\_t n} - security parameter\\
+\texttt{uint64\_t* c1} - first part of the ciphertext\\
+\texttt{uint64\_t* c2} - second part of the ciphertext
+
+\section*{Ring Functions}
+
+\subsection*{\texttt{ulp\_ring\_alloc\_public\_key}}
+Allocate heap memory for storing a U-LP public key (ring variant).\\
+Parameters:\\
+\texttt{size\_t n} - security parameter and message length\\
+Return value:\\
+\texttt{ulp\_ring\_public\_key*} - pointer to the allocated heap memory
+
+\subsection*{\texttt{ulp\_ring\_alloc\_private\_key}}
+Allocate heap memory for storing a U-LP private key (ring variant).\\
+Parameters:\\
+\texttt{size\_t n} - security parameter and message length\\
+Return value:\\
+\texttt{ulp\_ring\_private\_key*} - pointer to the allocated heap memory
+
+\subsection*{\texttt{ulp\_ring\_alloc\_ciphertext}}
+Allocate heap memory for storing a U-LP ciphertext (ring variant).\\
+Parameters:\\
+\texttt{size\_t n} - security parameter and message length\\
+Return value:\\
+\texttt{ulp\_ring\_ciphertext*} - pointer to the allocated heap memory
+
+\subsection*{\texttt{ulp\_ring\_free\_public\_key}}
+Deallocate heap memory for a U-LP public key (ring variant).\\
+Parameters:\\
+\texttt{ulp\_ring\_public\_key* pub\_key} - pointer to the memory to free\\
+Return value:\\
+\texttt{void}
+
+\subsection*{\texttt{ulp\_ring\_free\_private\_key}}
+Deallocate heap memory for a U-LP private key (ring variant).\\
+Parameters:\\
+\texttt{ulp\_ring\_private\_key* priv\_key} - pointer to the memory to free\\
+Return value:\\
+\texttt{void}
+
+\subsection*{\texttt{ulp\_ring\_free\_ciphertext}}
+Deallocate heap memory for a U-LP ciphertext (ring variant).\\
+Parameters:\\
+\texttt{ulp\_ring\_ciphertext* ciphertext} - pointer to the memory to free\\
+Return value:\\
+\texttt{void}
+
+\subsection*{\texttt{ulp\_ring\_generate\_key\_pair}}
+Generate a keypair for the U-LP cryptosystem (ring variant).\\
+Parameters:\\
+\texttt{size\_t n} - security parameter and message length\\
+\texttt{uint64\_t sk} - error bound for key generation\\
+\texttt{uint64\_t se} - error bound for encryption\\
+\texttt{uint64\_t q} - modulus, must be less than $2^{63}$ due to possible overflow problems\\
+\texttt{ulp\_ring\_public\_key** pub\_key\_p} - pointer to a public key pointer (will be generated)\\
+\texttt{ulp\_ring\_private\_key** priv\_key\_p} - pointer to a private key pointer (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\subsection*{\texttt{ulp\_ring\_encrypt}}
+Encrypt a message with the U-LP cryptosystem (ring variant).\\
+Parameters:\\
+\texttt{uint8\_t msg[]} - the bytes to encrypt (number of bits has to match the n parameter in the key)\\
+\texttt{ulp\_ring\_public\_key* pub\_key} - the public key used for encryption\\
+\texttt{ulp\_ring\_ciphertext** ciphertext\_p} - pointer to the ciphertext pointer (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\subsection*{\texttt{ulp\_ring\_decrypt}}
+Decrypt a ciphertext with the U-LP cryptosystem (ring variant).\\
+Parameters:\\
+\texttt{ulp\_ring\_ciphertext* ciphertext} - pointer to the ciphertext to decrypt\\
+\texttt{ulp\_ring\_private\_key* priv\_key} - the private key used for decryption\\
+\texttt{uint8\_t** msg\_p} - pointer to the message buffer pointer (will be generated)\\
+Return value:\\
+\texttt{int} - 0 on success, a negative value otherwise
+
+\end{document}
