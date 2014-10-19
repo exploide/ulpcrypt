@@ -149,38 +149,21 @@ int is_prime(uint64_t n) {
  */
 int poly_mulmod(uint64_t p1[], uint64_t p2[], size_t n, uint64_t q, uint64_t result[]) {
 
-    uint64_t* tmp = calloc(2*n-1, sizeof(uint64_t));
-    if(tmp == NULL)
-        goto fail;
+    memset(result, 0, n*sizeof(uint64_t));
 
-    // p1 * p2
+    // p1 * p2 mod (x^n + 1)
+    // the fact is exploited that x^n = -1   mod (x^n + 1)
     for(size_t i = 0; i < n; i++) {
         for(size_t j = 0; j < n; j++) {
-            tmp[i+j] = (tmp[i+j] + mulmod(p1[i], p2[j], q)) % q;
+            uint64_t tmp = mulmod(p1[i], p2[j], q);
+            if(i+j < n) {
+                result[i+j] = (result[i+j] + tmp) % q;
+            } else {
+                result[i+j-n] = (result[i+j-n] + q - tmp) %q;
+            }
         }
     }
-
-    // tmp mod (x^n + 1)
-    while(1) {
-        size_t deg;
-        for(deg = 2*n-2; deg >= n; deg--) {
-            if(tmp[deg] != 0)
-                break;
-        }
-        if(deg < n)
-            break;
-
-        tmp[deg-n] = (tmp[deg-n] + q - tmp[deg]) % q;
-        tmp[deg] = 0;
-    }
-
-    memcpy(result, tmp, n*sizeof(uint64_t));
-    free(tmp);
 
     return 0;
-
-
-    fail:
-        return -1;
 
 }
