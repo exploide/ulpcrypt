@@ -1,5 +1,4 @@
-ulpcrypt
-========
+# ulpcrypt
 
 Implementation of the U-LP Cryptosystem
 
@@ -10,28 +9,32 @@ U-LP is a provably secure (post-quantum) encryption scheme, based on the *learni
 Warning: Note that this cryptosystem is very young and not very extensively researched, yet. The purpose of this library is mainly for academic purposes. So take care when considering this for use in practice.
 
 
-##Building ulpcrypt
+## Building ulpcrypt
 
-ulpcrypt is built using the CMake build system. Primarily it's configured for the use with the gcc compiler, but should also work with clang. ulpcrypt should compile on Linux, Windows, and Mac OS X. The following shows the steps required for compilation, exemplary on Linux:
+ulpcrypt is built using the CMake build system. Primarily it is configured for the use with the gcc compiler, but should also work with clang. ulpcrypt should compile on Linux, Windows, and Mac OS X. The following shows the steps required for compilation, exemplary on Linux:
+
 ```
 $ mkdir build
 $ cd build
 $ cmake ..
 $ make
 ```
+
 This should build both, a static and a shared version of ulpcrypt.
 
 
-##Testing ulpcrypt
+## Testing ulpcrypt
 
 This library comes with a test suite, powered by CTest, the testing tool which is shipped with CMake. To run the test suite, just execute in the build folder:
+
 ```
 $ make test
 ```
+
 All the test should pass before continuing using the library.
 
 
-##Using ulpcrypt
+## Using ulpcrypt
 
 ulpcrypt compiles to a shared and a static library. To make the function definitions available, just include the
 header `ulpcrypt.h`. Most functions return the value 0 on success and a negative value, otherwise. Exceptions
@@ -41,7 +44,8 @@ which return nothing.
 An API documentation including structures and functions is available in the `doc/` directory.
 
 Exemplary usage:
-```
+
+```c
 #include <stdlib.h>
 
 #include "ulpcrypt.h"
